@@ -6,10 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Calendar Versioning](https://calver.org/) of
 the following form: YYYY.0M.0D.
 
-## 2025.02.04
+## 2025.03.04
 
 ### Added
 
-- Designed a `GameStatsTracker` component
-- Designed a `RowingWorkoutTracker` component
-- Designed a `LegoCollectionManager` component
+- Designed kernel and enhanced interfaces for GameStatsTracker component
+
+### Updated
+
+- Interfaces and their comments
