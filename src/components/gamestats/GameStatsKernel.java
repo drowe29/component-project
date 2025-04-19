@@ -1,5 +1,6 @@
-import java.util.Set;
+package components.gamestats;
 
+import components.set.Set;
 import components.standard.Standard;
 
 /**

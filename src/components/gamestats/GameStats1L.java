@@ -1,3 +1,5 @@
+package components.gamestats;
+
 import components.map.Map;
 import components.map.Map.Pair;
 import components.map.Map1L;
@@ -71,7 +73,7 @@ public class GameStats1L extends GameStatsSecondary {
     //Kernel Methods
 
     @Override
-    public void logGame(String game, int score) {
+    public final void logGame(String game, int score) {
         assert game != null : "Violation of: game is not null";
         assert score >= 0 : "Violation of: score >= 0";
 
@@ -86,7 +88,7 @@ public class GameStats1L extends GameStatsSecondary {
     }
 
     @Override
-    public int getBestScore(String game) {
+    public final int getBestScore(String game) {
         assert game != null : "Violation of: game is not null";
 
         if (!this.stats.hasKey(game) || this.stats.value(game).length() == 0) {
@@ -104,7 +106,7 @@ public class GameStats1L extends GameStatsSecondary {
     }
 
     @Override
-    public int getTotalGamesPlayed(String game) {
+    public final int getTotalGamesPlayed(String game) {
         assert game != null : "Violation of: game is not null";
         if (this.stats.hasKey(game)) {
             return this.stats.value(game).length();
@@ -116,17 +118,17 @@ public class GameStats1L extends GameStatsSecondary {
     //Standard methods
 
     @Override
-    public void clear() {
+    public final void clear() {
         this.createNewRep();
     }
 
     @Override
-    public GameStats1L newInstance() {
+    public final GameStats1L newInstance() {
         return new GameStats1L();
     }
 
     @Override
-    public void transferFrom(GameStats source) {
+    public final void transferFrom(GameStats source) {
         assert source != null : "Violation of: source is not null";
         assert source != this : "Violation of: source is not this";
 
@@ -135,8 +137,20 @@ public class GameStats1L extends GameStatsSecondary {
         src.createNewRep();
     }
 
-    //Methods required by GameStatsSecondary
+    @Override
+    public final void addScore(String game, int score) {
+        this.logGame(game, score);
+    }
 
+    /**
+     * Returns the score at the specified index for the given game.
+     *
+     * @param game
+     *            the name of the game
+     * @param index
+     *            the index into that game's score list
+     * @return the recorded score at that index
+     */
     @Override
     protected int getScoreAt(String game, int index) {
         assert game != null : "Violation of: game is not null";
@@ -147,23 +161,31 @@ public class GameStats1L extends GameStatsSecondary {
         return seq.entry(index);
     }
 
+    /**
+     * Returns the set of all game names that have been logged.
+     *
+     * @return a set of game names
+     */
     @Override
     public Set<String> getGames() {
-        Set<String> games = new Set1L<>();
-        Sequence<Pair<String, Sequence<Integer>>> temp = new Sequence1L<>();
+        Set<String> games = new Set1L<String>();
+        Sequence<Pair<String, Sequence<Integer>>> temp = new Sequence1L<Pair<String, Sequence<Integer>>>();
 
+        // Remove all entries, collecting keys, while saving pairs in temp
         while (this.stats.size() > 0) {
             Pair<String, Sequence<Integer>> p = this.stats.removeAny();
             games.add(p.key());
             temp.add(temp.length(), p);
         }
 
-        // Restore representation
+        // Restore the original map entries
         for (int i = 0; i < temp.length(); i++) {
             Pair<String, Sequence<Integer>> p = temp.entry(i);
             this.stats.add(p.key(), p.value());
         }
         temp.clear();
+
         return games;
     }
+
 }

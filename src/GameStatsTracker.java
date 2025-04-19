@@ -80,6 +80,9 @@ public class GameStatsTracker {
 
     /**
      * Main method to demonstrate.
+     *
+     * @param args
+     *            command-line arguments (not used)
      */
     public static void main(String[] args) {
         GameStatsTracker tracker = new GameStatsTracker();

@@ -131,6 +131,9 @@ of it in this folder. You may also embed it just below using markdown syntax
 (i.e., `![ALT TEXT](path/to/file)`).
 
 ```generic
+   Standard
+      ^
+      |
 GameStatsKernel
       ^
       |
